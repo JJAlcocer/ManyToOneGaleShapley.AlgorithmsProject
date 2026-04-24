@@ -6,7 +6,7 @@ void runPerformanceTests() {
     std::vector<int> testSizes = {50, 100, 500, 1000, 1500, 2500, 5000};
     int capacityPerTable = 5;
 
-    std::cout << "Performance & Stability Scaling Tests:\n";
+    std::cout << "Performance and Stability Scaling Tests:\n";
     std::cout << "Guests\tTables\tTime(ms)\tStable?\n";
     std::cout << "----------------------------------------\n";
 
