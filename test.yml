@@ -1,0 +1,26 @@
+name: testPipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkoutCode
+        uses: actions/checkout@v4
+
+      - name: compileMain
+        run: g++ main.cpp stableMatching.cpp -o mainProgram
+
+      - name: compileTests
+        run: g++ test.cpp stableMatching.cpp -o testSuite
+
+      - name: runTests
+        run: ./testSuite
