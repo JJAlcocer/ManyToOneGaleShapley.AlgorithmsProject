@@ -11,12 +11,12 @@ int main() {
 
     generateRandomData(totalGuests, totalTables, capacityPerTable, guestList, tableList);
     
-    std::vector<std::vector<int>> finalSeating = runGaleShapley(totalGuests, totalTables, guestList, tableList);
+    MatchResult result = runGaleShapley(totalGuests, totalTables, guestList, tableList);
 
     std::cout << "Seating Arrangement (50 Guests):\n";
     for(int i = 0; i < totalTables; ++i) {
         std::cout << "Table " << i << ": ";
-        for(int guest : finalSeating[i]) {
+        for(int guest : result.assignments[i]) {
             std::cout << guest << " ";
         }
         std::cout << "\n";

@@ -34,7 +34,7 @@ void generateRandomData(int numGuests, int numTables, int tableCapacity, std::ve
     }
 }
 
-std::vector<std::vector<int>> runGaleShapley(int numGuests, int numTables, const std::vector<Guest>& guests, const std::vector<Table>& tables) {
+MatchResult runGaleShapley(int numGuests, int numTables, const std::vector<Guest>& guests, const std::vector<Table>& tables) {
     std::queue<int> unassignedGuests;
     for(int i = 0; i < numGuests; ++i) {
         unassignedGuests.push(i);
@@ -42,6 +42,7 @@ std::vector<std::vector<int>> runGaleShapley(int numGuests, int numTables, const
 
     std::vector<int> guestNextProposal(numGuests, 0);
     std::vector<std::vector<int>> tableAssignments(numTables);
+    long long proposalCount = 0;
 
     while(!unassignedGuests.empty()) {
         int currentGuest = unassignedGuests.front();
@@ -52,6 +53,7 @@ std::vector<std::vector<int>> runGaleShapley(int numGuests, int numTables, const
         }
 
         int preferredTable = guests[currentGuest].tablePreferences[guestNextProposal[currentGuest]++];
+        proposalCount++;
         
         if(tableAssignments[preferredTable].size() < tables[preferredTable].capacity) {
             tableAssignments[preferredTable].push_back(currentGuest);
@@ -78,7 +80,7 @@ std::vector<std::vector<int>> runGaleShapley(int numGuests, int numTables, const
             }
         }
     }
-    return tableAssignments;
+    return {tableAssignments, proposalCount};
 }
 
 bool verifyStability(int numGuests, int numTables, const std::vector<Guest>& guests, const std::vector<Table>& tables, const std::vector<std::vector<int>>& assignments) {
