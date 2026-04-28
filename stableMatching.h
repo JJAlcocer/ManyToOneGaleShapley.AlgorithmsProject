@@ -4,18 +4,19 @@
 #include <vector>
 
 struct Table {
-    int capacity;
-    std::vector<int> guestPreferences;
-    std::vector<int> guestRanks;
+	int capacity;
+	std::vector<int> guestPreferences;
+	std::vector<int> guestRanks;
 };
 
 struct Guest {
-    std::vector<int> tablePreferences;
+	std::vector<int> tablePreferences;
+	std::vector<int> enemies;
 };
 
 struct MatchResult {
-    std::vector<std::vector<int>> assignments;
-    long long totalProposals;
+	std::vector<std::vector<int>> assignments;
+	long long totalProposals;
 };
 
 void generateRandomData(int numGuests, int numTables, int tableCapacity, std::vector<Guest>& guests, std::vector<Table>& tables);
