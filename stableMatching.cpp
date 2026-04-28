@@ -69,8 +69,11 @@ MatchResult runGaleShapley(int numGuests, int numTables, const std::vector<Guest
 
 		for(size_t i = 0; i < tableAssignments[preferredTable].size(); ++i) {
 			int seatedGuest = tableAssignments[preferredTable][i];
-			auto enemyIt = std::find(guests[currentGuest].enemies.begin(), guests[currentGuest].enemies.end(), seatedGuest);
-			if(enemyIt != guests[currentGuest].enemies.end()) {
+			
+			bool currentHatesSeated = std::find(guests[currentGuest].enemies.begin(), guests[currentGuest].enemies.end(), seatedGuest) != guests[currentGuest].enemies.end();
+			bool seatedHatesCurrent = std::find(guests[seatedGuest].enemies.begin(), guests[seatedGuest].enemies.end(), currentGuest) != guests[seatedGuest].enemies.end();
+
+			if(currentHatesSeated || seatedHatesCurrent) {
 				enemyFound = true;
 				seatedEnemyIndex = i;
 				break;
@@ -135,8 +138,10 @@ bool verifyStability(int numGuests, int numTables, const std::vector<Guest>& gue
 
 			bool enemyAtPreferredTable = false;
 			for(int seatedGuest : assignments[preferredTable]) {
-				auto enemyIt = std::find(guests[g].enemies.begin(), guests[g].enemies.end(), seatedGuest);
-				if(enemyIt != guests[g].enemies.end()) {
+				bool gHatesSeated = std::find(guests[g].enemies.begin(), guests[g].enemies.end(), seatedGuest) != guests[g].enemies.end();
+				bool seatedHatesG = std::find(guests[seatedGuest].enemies.begin(), guests[seatedGuest].enemies.end(), g) != guests[seatedGuest].enemies.end();
+				
+				if(gHatesSeated || seatedHatesG) {
 					enemyAtPreferredTable = true;
 					break;
 				}
