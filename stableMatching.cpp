@@ -133,6 +133,19 @@ bool verifyStability(int numGuests, int numTables, const std::vector<Guest>& gue
 				break;
 			}
 
+			bool enemyAtPreferredTable = false;
+			for(int seatedGuest : assignments[preferredTable]) {
+				auto enemyIt = std::find(guests[g].enemies.begin(), guests[g].enemies.end(), seatedGuest);
+				if(enemyIt != guests[g].enemies.end()) {
+					enemyAtPreferredTable = true;
+					break;
+				}
+			}
+
+			if(enemyAtPreferredTable) {
+				continue;
+			}
+
 			int guestRankForPreferred = tables[preferredTable].guestRanks[g];
 			
 			if(assignments[preferredTable].size() < tables[preferredTable].capacity) {
